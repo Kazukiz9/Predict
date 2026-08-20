@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createPublicClient, createWalletClient, custom, formatEther, formatUnits, http, isAddress, parseEther, type Address, type Hash } from 'viem';
+import { createPublicClient, createWalletClient, custom, formatEther, http, isAddress, parseEther, type Address, type Hash } from 'viem';
 import { bsc } from 'viem/chains';
 import abi from '@/abi/contract.json';
 import { Copy, ExternalLink, LoaderCircle, RefreshCw, ShieldCheck, TrendingDown, TrendingUp, Wallet, ChevronDown, Code2, Trophy, History, AlertTriangle, CheckCircle2 } from 'lucide-react';
@@ -151,7 +151,7 @@ function Advanced({ address, onWrite }: { address?: Address; onWrite: (name: str
   const [results, setResults] = useState<Record<string, string>>({});
   const entries = (abi as any[]).filter((item) => item.type === 'function');
   const execute = async (item: any) => {
-    const args = (item.inputs ?? []).map((input: any) => { const value = values[item.name] ?? ''; if (input.type === 'uint256' || input.type === 'uint80') return BigInt(value || '0'); if (input.type === 'uint256[]') return (value as string).split(',').filter(Boolean).map((part) => BigInt(part.trim())); return value; });
+    const args = (item.inputs ?? []).map((input: any, index: number) => { const value = values[`${item.name}-${index}`] ?? ''; if (input.type === 'uint256' || input.type === 'uint80') return BigInt(value || '0'); if (input.type === 'uint256[]') return (value as string).split(',').filter(Boolean).map((part) => BigInt(part.trim())); return value; });
     try { if (item.stateMutability === 'view') { const result = await read(item.name, args); setResults((prev) => ({ ...prev, [item.name]: JSON.stringify(result, (_, value) => typeof value === 'bigint' ? value.toString() : value) })); } else await onWrite(item.name, args); } catch (error) { setResults((prev) => ({ ...prev, [item.name]: readableError(error) })); }
   };
   return <div className="advanced"><div className="contract-meta"><span className="mono">{contractAddress}</span><a href={contractExplorer} target="_blank" rel="noreferrer">BscScan <ExternalLink size={12} /></a></div><div className="advanced-grid">{entries.map((item: any) => <div className={`function-card ${item.stateMutability !== 'view' ? 'write' : ''}`} key={item.name}><div className="function-name"><Code2 size={14} />{item.name}<small>{item.stateMutability}</small></div>{item.inputs?.map((input: any, index: number) => <input key={`${item.name}-${index}`} placeholder={`${input.name || `arg${index}`} · ${input.type}`} value={values[`${item.name}-${index}`] ?? ''} onChange={(event) => setValues((prev) => ({ ...prev, [`${item.name}-${index}`]: event.target.value }))} />)}<button disabled={item.stateMutability !== 'view' && !address} onClick={() => void execute(item)}>{item.stateMutability === 'view' ? 'Read' : 'Write with wallet'}</button>{results[item.name] && <pre>{results[item.name]}</pre>}</div>)}</div></div>;
