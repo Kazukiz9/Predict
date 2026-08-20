@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "BSC Prediction Dapp"
+description = "A live BNB Smart Chain prediction interface that reads round data from the verified contract and lets connected wallets place explicit Bull or Bear bets, claim rewards, inspect history, and access advanced contract functions."
+version = "1.0.0"
+id = "artifacts/bsc-prediction-dapp"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23590
+
+[services.development]
+run = "pnpm --filter @workspace/bsc-prediction-dapp run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bsc-prediction-dapp", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bsc-prediction-dapp/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23590"
+BASE_PATH = "/"

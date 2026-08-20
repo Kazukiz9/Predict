@@ -1,0 +1,1932 @@
+REBUILD THE CURRENT PROJECT INTO A FULLY FUNCTIONAL BNB SMART CHAIN PREDICTION DAPP.
+
+
+
+
+I AM PROVIDING THE COMPLETE VERIFIED ABI BELOW.
+
+DO NOT TRY TO FETCH OR GUESS THE ABI.
+
+USE THIS ABI EXACTLY.
+
+
+
+
+==================================================
+
+CONTRACT
+
+==================================================
+
+
+
+
+Address:
+
+0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA
+
+
+
+
+Network:
+
+BNB Smart Chain Mainnet
+
+
+
+
+Chain ID:
+
+56
+
+
+
+
+RPC:
+
+https://bsc-dataseed.binance.org/
+
+
+
+
+BscScan:
+
+https://bscscan.com/address/0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA
+
+
+
+
+==================================================
+
+IMPORTANT
+
+==================================================
+
+
+
+
+This is a real blockchain application.
+
+
+
+
+DO NOT create mock data.
+
+
+
+
+DO NOT invent functions.
+
+
+
+
+DO NOT invent round numbers.
+
+
+
+
+DO NOT invent prices.
+
+
+
+
+DO NOT fake transaction results.
+
+
+
+
+Every displayed prediction value must come from the actual smart contract.
+
+
+
+
+Every write operation must use the provided ABI and connected wallet.
+
+
+
+
+==================================================
+
+ABI
+
+==================================================
+
+
+
+
+Create:
+
+
+
+
+src/abi/contract.json
+
+
+
+
+and put the COMPLETE ABI I provided into that file.
+
+
+
+
+Use it as the single source of truth.
+
+
+
+
+The ABI contains these important functions:
+
+
+
+
+READ:
+
+
+
+
+MAX_TREASURY_FEE()
+
+adminAddress()
+
+bufferSeconds()
+
+claimable(epoch,user)
+
+currentEpoch()
+
+genesisLockOnce()
+
+genesisStartOnce()
+
+getUserRounds(user,cursor,size)
+
+getUserRoundsLength(user)
+
+intervalSeconds()
+
+ledger(epoch,user)
+
+minBetAmount()
+
+operatorAddress()
+
+oracle()
+
+oracleLatestRoundId()
+
+oracleUpdateAllowance()
+
+owner()
+
+paused()
+
+refundable(epoch,user)
+
+rounds(epoch)
+
+treasuryAmount()
+
+treasuryFee()
+
+userRounds(user,index)
+
+
+
+
+WRITE:
+
+
+
+
+betBear(epoch) payable
+
+betBull(epoch) payable
+
+claim(epochs[]) 
+
+claimTreasury()
+
+executeRound()
+
+genesisLockRound()
+
+genesisStartRound()
+
+pause()
+
+recoverToken(token,amount)
+
+renounceOwnership()
+
+setAdmin(adminAddress)
+
+setBufferAndIntervalSeconds(bufferSeconds,intervalSeconds)
+
+setMinBetAmount(minBetAmount)
+
+setOperator(operatorAddress)
+
+setOracle(oracle)
+
+setOracleUpdateAllowance(oracleUpdateAllowance)
+
+setTreasuryFee(treasuryFee)
+
+transferOwnership(newOwner)
+
+unpause()
+
+
+
+
+==================================================
+
+TECH STACK
+
+==================================================
+
+
+
+
+Use:
+
+
+
+
+React
+
+TypeScript
+
+Vite
+
+wagmi
+
+viem
+
+TanStack React Query
+
+
+
+
+No backend is required.
+
+
+
+
+The application must work on Vercel.
+
+
+
+
+==================================================
+
+WALLET
+
+==================================================
+
+
+
+
+Implement Connect Wallet.
+
+
+
+
+Support EIP-1193 wallets such as:
+
+
+
+
+MetaMask
+
+Trust Wallet
+
+Binance Wallet
+
+
+
+
+Show:
+
+
+
+
+Connected wallet
+
+Shortened address
+
+BNB balance
+
+
+
+
+If wallet is not on chain ID 56:
+
+
+
+
+show:
+
+
+
+
+WRONG NETWORK
+
+
+
+
+and:
+
+
+
+
+[ SWITCH TO BNB CHAIN ]
+
+
+
+
+Never ask for private keys or seed phrases.
+
+
+
+
+==================================================
+
+MAIN UI
+
+==================================================
+
+
+
+
+Build a polished dark prediction trading interface.
+
+
+
+
+Top:
+
+
+
+
+BNB SMART CHAIN
+
+
+
+
+Contract:
+
+0x18B2A687610328590Bc8F2e5fEdDe3b582A49cdA
+
+
+
+
+[Copy]
+
+
+
+
+[View BscScan]
+
+
+
+
+[Connect Wallet]
+
+
+
+
+==================================================
+
+CURRENT ROUND
+
+==================================================
+
+
+
+
+Read:
+
+
+
+
+currentEpoch()
+
+
+
+
+Then read:
+
+
+
+
+rounds(currentEpoch)
+
+
+
+
+The round returns:
+
+
+
+
+epoch
+
+startTimestamp
+
+lockTimestamp
+
+closeTimestamp
+
+lockPrice
+
+closePrice
+
+lockOracleId
+
+closeOracleId
+
+totalAmount
+
+bullAmount
+
+bearAmount
+
+rewardBaseCalAmount
+
+rewardAmount
+
+oracleCalled
+
+
+
+
+Display:
+
+
+
+
+CURRENT ROUND
+
+#123456
+
+
+
+
+LOCK PRICE
+
+$...
+
+
+
+
+CURRENT PRICE / CLOSE PRICE
+
+$...
+
+
+
+
+TOTAL POOL
+
+... BNB
+
+
+
+
+BULL
+
+... BNB
+
+
+
+
+BEAR
+
+... BNB
+
+
+
+
+LOCK TIME
+
+...
+
+
+
+
+CLOSE TIME
+
+...
+
+
+
+
+==================================================
+
+PRICE DISPLAY
+
+==================================================
+
+
+
+
+The contract returns int256 prices.
+
+
+
+
+Handle int256 correctly.
+
+
+
+
+Do not assume a decimal count unless the contract/oracle configuration provides it.
+
+
+
+
+If the price decimals cannot be determined from this ABI, clearly label the value as the raw oracle price or use the known Chainlink feed configuration only if verified.
+
+
+
+
+Do NOT silently fabricate decimals.
+
+
+
+
+==================================================
+
+COUNTDOWN
+
+==================================================
+
+
+
+
+Create live countdown:
+
+
+
+
+LOCKING IN
+
+00:00:00
+
+
+
+
+Then:
+
+
+
+
+CLOSING IN
+
+00:00:00
+
+
+
+
+Use:
+
+
+
+
+lockTimestamp
+
+closeTimestamp
+
+
+
+
+from the actual round.
+
+
+
+
+Update countdown every second.
+
+
+
+
+When the timer reaches zero:
+
+
+
+
+refetch contract data.
+
+
+
+
+==================================================
+
+BET BULL
+
+==================================================
+
+
+
+
+Create a large GREEN:
+
+
+
+
+BULL / UP
+
+
+
+
+panel.
+
+
+
+
+Input:
+
+
+
+
+BNB Amount
+
+
+
+
+Example:
+
+
+
+
+0.01
+
+
+
+
+Display minimum bet:
+
+
+
+
+minBetAmount()
+
+
+
+
+Convert from wei to BNB.
+
+
+
+
+Validate:
+
+
+
+
+amount >= minBetAmount
+
+
+
+
+Also check the user's BNB balance.
+
+
+
+
+When clicking:
+
+
+
+
+BET BULL
+
+
+
+
+call:
+
+
+
+
+betBull(currentEpoch)
+
+
+
+
+with:
+
+
+
+
+value = entered BNB amount
+
+
+
+
+IMPORTANT:
+
+
+
+
+The epoch argument must be currentEpoch().
+
+
+
+
+Do not let the user accidentally bet on an arbitrary epoch from the normal UI.
+
+
+
+
+Before transaction:
+
+
+
+
+show:
+
+
+
+
+Round:
+
+#currentEpoch
+
+
+
+
+Side:
+
+BULL
+
+
+
+
+Amount:
+
+0.01 BNB
+
+
+
+
+Then require wallet confirmation.
+
+
+
+
+After sending:
+
+
+
+
+show transaction hash.
+
+
+
+
+Then wait for confirmation.
+
+
+
+
+Show:
+
+
+
+
+SUCCESS
+
+
+
+
+[View on BscScan]
+
+
+
+
+==================================================
+
+BET BEAR
+
+==================================================
+
+
+
+
+Create a RED:
+
+
+
+
+BEAR / DOWN
+
+
+
+
+panel.
+
+
+
+
+Same logic.
+
+
+
+
+Call:
+
+
+
+
+betBear(currentEpoch)
+
+
+
+
+with:
+
+
+
+
+value = entered BNB amount
+
+
+
+
+Require wallet confirmation.
+
+
+
+
+Show transaction state.
+
+
+
+
+==================================================
+
+USER POSITION
+
+==================================================
+
+
+
+
+If wallet connected:
+
+
+
+
+Read:
+
+
+
+
+ledger(currentEpoch,userAddress)
+
+
+
+
+The returned struct is:
+
+
+
+
+position
+
+amount
+
+claimed
+
+
+
+
+Position enum:
+
+
+
+
+0 = Bull
+
+1 = Bear
+
+
+
+
+Display:
+
+
+
+
+YOUR POSITION
+
+
+
+
+BULL / BEAR
+
+
+
+
+Amount:
+
+... BNB
+
+
+
+
+Claimed:
+
+Yes / No
+
+
+
+
+If no position:
+
+
+
+
+No position for this round.
+
+
+
+
+==================================================
+
+CLAIM
+
+==================================================
+
+
+
+
+Use:
+
+
+
+
+claimable(epoch,user)
+
+
+
+
+to determine whether the current round is claimable.
+
+
+
+
+If claimable:
+
+
+
+
+show:
+
+
+
+
+[ CLAIM REWARD ]
+
+
+
+
+The contract function is:
+
+
+
+
+claim(uint256[] epochs)
+
+
+
+
+Call it as:
+
+
+
+
+claim([epoch])
+
+
+
+
+Require wallet confirmation.
+
+
+
+
+After transaction:
+
+
+
+
+show transaction hash and BscScan link.
+
+
+
+
+==================================================
+
+USER HISTORY
+
+==================================================
+
+
+
+
+Use:
+
+
+
+
+getUserRounds(user,cursor,size)
+
+
+
+
+and:
+
+
+
+
+getUserRoundsLength(user)
+
+
+
+
+Create:
+
+
+
+
+MY HISTORY
+
+
+
+
+Show:
+
+
+
+
+Epoch
+
+Position
+
+Amount
+
+Claimed
+
+Claimable
+
+
+
+
+Allow:
+
+
+
+
+Load More
+
+
+
+
+Do not load unlimited historical rounds at once.
+
+
+
+
+Use reasonable pagination such as 10 or 20.
+
+
+
+
+==================================================
+
+ROUND HISTORY
+
+==================================================
+
+
+
+
+Create:
+
+
+
+
+ROUND HISTORY
+
+
+
+
+Use:
+
+
+
+
+rounds(epoch)
+
+
+
+
+to load historical rounds.
+
+
+
+
+Show:
+
+
+
+
+Epoch
+
+Lock Price
+
+Close Price
+
+Bull
+
+Bear
+
+Total
+
+Result
+
+
+
+
+Determine result from actual lockPrice and closePrice:
+
+
+
+
+Bull if closePrice > lockPrice
+
+Bear if closePrice < lockPrice
+
+Draw if equal
+
+
+
+
+If closePrice is not available / round isn't closed:
+
+
+
+
+show:
+
+
+
+
+Pending
+
+
+
+
+Do not classify unfinished rounds.
+
+
+
+
+==================================================
+
+POOL VISUALIZATION
+
+==================================================
+
+
+
+
+Create a simple visual comparison:
+
+
+
+
+BULL
+
+████████
+
+
+
+
+BEAR
+
+████
+
+
+
+
+Calculate percentages from:
+
+
+
+
+bullAmount
+
+bearAmount
+
+
+
+
+Use actual values.
+
+
+
+
+==================================================
+
+PAYOUT INFORMATION
+
+==================================================
+
+
+
+
+Use:
+
+
+
+
+rewardBaseCalAmount
+
+rewardAmount
+
+
+
+
+when available.
+
+
+
+
+Do not invent payout calculations.
+
+
+
+
+Explain clearly that final payout depends on the contract's actual reward calculation.
+
+
+
+
+==================================================
+
+CONTRACT INFORMATION
+
+==================================================
+
+
+
+
+Create a collapsible:
+
+
+
+
+CONTRACT INFO
+
+
+
+
+Display:
+
+
+
+
+Current Epoch
+
+Minimum Bet
+
+Treasury Fee
+
+Treasury Amount
+
+Interval Seconds
+
+Buffer Seconds
+
+Oracle
+
+Oracle Latest Round ID
+
+Oracle Update Allowance
+
+Paused
+
+Admin
+
+Operator
+
+Owner
+
+
+
+
+All values must be read from the contract.
+
+
+
+
+Format addresses with copy buttons.
+
+
+
+
+==================================================
+
+ADVANCED CONTRACT
+
+==================================================
+
+
+
+
+Create an:
+
+
+
+
+ADVANCED
+
+
+
+
+tab.
+
+
+
+
+This must dynamically expose every function from the ABI.
+
+
+
+
+Separate:
+
+
+
+
+READ FUNCTIONS
+
+
+
+
+and
+
+
+
+
+WRITE FUNCTIONS.
+
+
+
+
+For every function:
+
+
+
+
+display function name
+
+parameters
+
+types
+
+execute button
+
+result
+
+
+
+
+For write functions:
+
+
+
+
+require wallet connection
+
+require BSC
+
+show confirmation
+
+show transaction status
+
+show transaction hash
+
+show BscScan link
+
+
+
+
+This is important because I want access to ALL contract functions.
+
+
+
+
+==================================================
+
+ADMIN FUNCTIONS
+
+==================================================
+
+
+
+
+Functions such as:
+
+
+
+
+pause
+
+unpause
+
+setAdmin
+
+setOperator
+
+setOracle
+
+setMinBetAmount
+
+setTreasuryFee
+
+setBufferAndIntervalSeconds
+
+setOracleUpdateAllowance
+
+recoverToken
+
+claimTreasury
+
+transferOwnership
+
+renounceOwnership
+
+executeRound
+
+genesisStartRound
+
+genesisLockRound
+
+
+
+
+must ONLY appear in:
+
+
+
+
+ADVANCED → WRITE
+
+
+
+
+Do not put them next to normal Bull/Bear betting buttons.
+
+
+
+
+Clearly mark them:
+
+
+
+
+ADMIN / OPERATOR FUNCTION
+
+
+
+
+Never automatically call them.
+
+
+
+
+==================================================
+
+TRANSACTION STATUS
+
+==================================================
+
+
+
+
+Create reusable transaction status UI.
+
+
+
+
+States:
+
+
+
+
+IDLE
+
+WAITING FOR WALLET
+
+SUBMITTED
+
+CONFIRMING
+
+CONFIRMED
+
+FAILED
+
+REJECTED
+
+
+
+
+Show:
+
+
+
+
+Transaction Hash
+
+
+
+
+and:
+
+
+
+
+[View on BscScan]
+
+
+
+
+==================================================
+
+ERROR HANDLING
+
+==================================================
+
+
+
+
+Handle errors such as:
+
+
+
+
+User rejected transaction
+
+Insufficient funds
+
+Wrong network
+
+Contract reverted
+
+Below minimum bet
+
+Betting closed
+
+Invalid epoch
+
+Already bet
+
+Claim unavailable
+
+RPC error
+
+Wallet unavailable
+
+
+
+
+Convert errors into readable messages.
+
+
+
+
+==================================================
+
+REFRESH
+
+==================================================
+
+
+
+
+Use React Query / wagmi.
+
+
+
+
+Refresh current round data every 3-5 seconds.
+
+
+
+
+Countdown itself should update every second locally.
+
+
+
+
+After any successful write:
+
+
+
+
+immediately refetch:
+
+
+
+
+currentEpoch
+
+round
+
+ledger
+
+claimable
+
+user history
+
+BNB balance
+
+
+
+
+==================================================
+
+MOBILE
+
+==================================================
+
+
+
+
+The website must be fully usable on Android.
+
+
+
+
+Mobile layout:
+
+
+
+
+Wallet
+
+Current Round
+
+Countdown
+
+Bull
+
+Bear
+
+User Position
+
+History
+
+
+
+
+stack vertically.
+
+
+
+
+Buttons must be large enough for touch.
+
+
+
+
+==================================================
+
+SECURITY
+
+==================================================
+
+
+
+
+NEVER:
+
+
+
+
+request private key
+
+request seed phrase
+
+store wallet credentials
+
+auto-sign transactions
+
+auto-submit transactions
+
+
+
+
+Every write requires explicit wallet confirmation.
+
+
+
+
+==================================================
+
+FILES
+
+==================================================
+
+
+
+
+Use a clean structure:
+
+
+
+
+src/
+
+  abi/
+
+    contract.json
+
+  components/
+
+    Header.tsx
+
+    WalletButton.tsx
+
+    RoundCard.tsx
+
+    Countdown.tsx
+
+    BetPanel.tsx
+
+    UserPosition.tsx
+
+    RoundHistory.tsx
+
+    UserHistory.tsx
+
+    ContractInfo.tsx
+
+    AdvancedContract.tsx
+
+    TransactionStatus.tsx
+
+  hooks/
+
+  lib/
+
+  App.tsx
+
+  main.tsx
+
+  index.css
+
+
+
+
+==================================================
+
+BUILD
+
+==================================================
+
+
+
+
+Actually implement everything.
+
+
+
+
+Do NOT only describe what needs to be done.
+
+
+
+
+Run:
+
+
+
+
+npm install
+
+
+
+
+then:
+
+
+
+
+npm run build
+
+
+
+
+Fix all build errors.
+
+
+
+
+Make sure the application runs.
+
+
+
+
+==================================================
+
+VERCEL
+
+==================================================
+
+
+
+
+The project must be deployable directly to Vercel.
+
+
+
+
+No backend required.
+
+
+
+
+Create README.md explaining:
+
+
+
+
+npm install
+
+npm run dev
+
+npm run build
+
+
+
+
+GitHub upload
+
+
+
+
+Vercel deployment
+
+
+
+
+==================================================
+
+FINAL CHECK
+
+==================================================
+
+
+
+
+Before finishing verify:
+
+
+
+
+1. Contract address is correct.
+
+2. Chain ID is 56.
+
+3. ABI is exactly the ABI provided.
+
+4. currentEpoch is read from blockchain.
+
+5. rounds(currentEpoch) is read from blockchain.
+
+6. Bull uses betBull(currentEpoch) with msg.value.
+
+7. Bear uses betBear(currentEpoch) with msg.value.
+
+8. Claim uses claim([epoch]).
+
+9. User position uses ledger(epoch,user).
+
+10. Claim availability uses claimable(epoch,user).
+
+11. No mock prediction data exists.
+
+12. No private key is requested.
+
+13. npm run build succeeds.
+
+
+
+
+DO NOT CLAIM SOMETHING WORKS IF IT HAS NOT BEEN IMPLEMENTED.
